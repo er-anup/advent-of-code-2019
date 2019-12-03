@@ -1,7 +1,6 @@
 /**
- *
- *
- *
+ * This is the Code in Java as a solution to second puzzle of Advent of Code 2019
+ * 'Find the input noun and verb that cause the program to produce the output 19690720 ?'
  *
  *
  */
@@ -11,17 +10,38 @@ import java.util.*;
 import java.io.File;
 import java.lang.Integer;
 
-public class FirstPuzzle  {
+public class SecondPuzzle  {
 
     public static void main(String[] args) throws IOException
     {
+        int nounAndVerb = getNounAndVerbForOpcodes();
 
-        Integer[] opcodes = getOpcodeInputs();
-        opcodes = replaceValues(opcodes, 12, 2);
+        System.out.println("The noun and verb is " + nounAndVerb + " \n");
+    }
 
-        opcodes = getModifiedOpcodes(opcodes);
+    /**
+     * This function returns the noun and verb to make 19690720 at index 0 in opcodes array.
+     * @return
+     * @throws IOException
+     */
+    private static int getNounAndVerbForOpcodes() throws IOException
+    {
+        int noun = 0;
+        int verb = 0;
+        for( noun = 0 ; noun < 100; noun++){
 
-       System.out.print("The Value left at position 0 is " + getValueAtPosition(opcodes, 0) + "\n");
+            for( verb = 0 ; verb < 100; verb++){
+                Integer[] opcodes = getOpcodeInputs();
+                opcodes = replaceValues(opcodes, noun, verb);
+
+                opcodes = getModifiedOpcodes(opcodes);
+
+                if (getValueAtPosition(opcodes, 0) == 19690720) {
+                    return ( 100 * noun + verb);
+                }
+            }
+        }
+        return 0;
     }
 
     /**
